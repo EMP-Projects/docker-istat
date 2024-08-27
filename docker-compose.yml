@@ -1,0 +1,48 @@
+services:
+  istat-db:
+    container_name: istat-db
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: md5
+      PGPORT: 5432
+      POSTGRES_DB: ${POSTGRES_ISTAT_DB}
+      POSTGRES_USER: ${POSTGRES_ISTAT_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_ISTAT_PASS}
+      POSTGRES_INITDB_ARGS: "-c shared_buffers=1GB -c work_mem=50MB -c maintenance_work_mem=10GB -c autovacuum_work_mem=2GB -c wal_level=minimal -c checkpoint_completion_target=0.9 -c max_wal_senders=0 -c random_page_cost=1.0"
+    ports:
+      - ${POSTGRES_ISTAT_PORT}:5432
+    healthcheck:
+      test: "PGPASSWORD=${POSTGRES_ISTAT_PASS} pg_isready -h 127.0.0.1 -U ${POSTGRES_ISTAT_USER} -d ${POSTGRES_ISTAT_DB} -p 5432"
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 1m
+    restart: on-failure
+    networks:
+      - istat-network
+    volumes:
+      - ./istat-data/db:/var/lib/postgresql
+
+  istat-ogr2ogr:
+    container_name: istat-ogr2ogr
+    image: ogr2ogr:latest
+    depends_on:
+      istat-db:
+        condition: service_healthy
+    environment:
+      PGPORT: 5432
+      PGHOST: istat-db
+      PGDB: ${POSTGRES_ISTAT_DB}
+      PGUSER: ${POSTGRES_ISTAT_USER}
+      PGPWD: ${POSTGRES_ISTAT_PASS}
+    networks:
+      - istat-network
+
+networks:
+  istat-network:
+    name: istat
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.70.0/24
