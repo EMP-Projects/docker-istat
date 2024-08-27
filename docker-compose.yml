@@ -24,8 +24,8 @@ services:
       - ./istat-data/db:/var/lib/postgresql
 
   istat-ogr2ogr:
-    container_name: istat-ogr2ogr
-    image: ogr2ogr:latest
+    container_name: istat-import
+    image: ghcr.io/emp-projects/docker-istat:main
     depends_on:
       istat-db:
         condition: service_healthy
