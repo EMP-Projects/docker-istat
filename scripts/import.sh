@@ -13,7 +13,7 @@ do
     # estrae il nome del file
     table=$(basename $file .geojson)
     
-    ogr2ogr -nlt PROMOTE_TO_MULTI -nln $table PG:"host=$PGHOST port=$PGPORT user=$PGUSER password=$PGPWD dbname=$PGDB" $file -f "PostgreSQL" -lco SCHEMA=public -lco SPATIAL_INDEX=YES -s_srs EPSG:4326 -t_srs EPSG:3857
+    ogr2ogr -nlt PROMOTE_TO_MULTI -nln $table PG:"host=$PGHOST port=$PGPORT user=$PGUSER password=$PGPWD dbname=$PGDB" $file -f "PostgreSQL" -s_srs EPSG:4326 -t_srs EPSG:3857
     
     # stampa a video il nome del file importato
     echo "Importato il file $file"
