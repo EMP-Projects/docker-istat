@@ -52,9 +52,6 @@ Siamo felici di accettare contributi da parte della community! Se desideri contr
 
 Se riscontri problemi o desideri suggerire miglioramenti, apri una nuova issue nel repository.
 
-## Licenza
-
-Questo progetto è distribuito con la licenza MIT. Per ulteriori informazioni, consulta il file `LICENSE`.
 # Licenza
 
 Il progetto è distribuito con la licenza MIT. Di seguito è riportato il testo completo della [licenza](LICENSE.md).
