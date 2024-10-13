@@ -7,5 +7,3 @@ COPY ./geojson/limits_IT_municipalities.geojson /geojson/
 
 RUN mkdir /scripts
 COPY ./scripts/* /scripts/
-
-CMD ["sh", "/scripts/import.sh"]

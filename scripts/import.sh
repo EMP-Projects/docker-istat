@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# dimmi come aggiungere argomenti PGHOST, PGPORT,PGUSER, PGPWD, PGDB a questo script bash
+# se non ci sono argomenti, esci
+if [ $# -ne 5 ]
+then
+    echo "Uso: $0 PGHOST PGPORT PGUSER PGPWD PGDB"
+    exit
+fi 
+
+# assegna i valori degli argomenti alle variabili
+PGHOST=$1
+PGPORT=$2
+PGUSER=$3
+PGPWD=$4
+PGDB=$5
+
 # se la cartella geojson non esiste la crea
 if [ ! -d "geojson" ]
 then
