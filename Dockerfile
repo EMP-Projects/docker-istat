@@ -7,3 +7,5 @@ COPY ./geojson/limits_IT_municipalities.geojson /geojson/
 
 RUN mkdir /scripts
 COPY ./scripts/* /scripts/
+
+ENTRYPOINT ["/scripts/import.sh"]
