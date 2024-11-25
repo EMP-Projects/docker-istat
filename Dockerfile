@@ -8,6 +8,6 @@ COPY ./geojson/limits_IT_municipalities.geojson .
 
 WORKDIR /root
 COPY ./scripts/istat-import.sh .
-RUN chmod +x istat-import.sh
+RUN chmod +x ~/istat-import.sh
 
 ENTRYPOINT ["~/istat-import.sh"]
