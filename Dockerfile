@@ -1,11 +1,13 @@
 FROM osgeo/gdal:alpine-small-3.6.3
 
-RUN mkdir /geojson
-COPY ./geojson/limits_IT_regions.geojson /geojson/
-COPY ./geojson/limits_IT_provinces.geojson /geojson/
-COPY ./geojson/limits_IT_municipalities.geojson /geojson/
+WORKDIR /root/geojson
 
-RUN mkdir /scripts
-COPY ./scripts/* /scripts/
+COPY ./scripts/geojson/limits_IT_regions.geojson .
+COPY ./scripts/geojson/limits_IT_provinces.geojson .
+COPY ./scripts/geojson/limits_IT_municipalities.geojson .
 
-ENTRYPOINT ["/scripts/import.sh"]
+WORKDIR /root/scripts
+COPY ./scripts/istat-import.sh .
+RUN chmod +x istat-import.sh
+
+ENTRYPOINT ["~/scripts/istat-import.sh"]
